@@ -125,7 +125,7 @@ DATABASES = {
     
     'gifthub': {  # gift DB
     'ENGINE': 'django.db.backends.mysql',
-    'NAME': 'gifthub',
+    'NAME': 'gifthub_test',
     'USER': 'recsys4',
     'PASSWORD': 'recsys1234',
     'HOST': '223.130.160.153',
