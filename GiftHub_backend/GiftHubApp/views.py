@@ -14,7 +14,7 @@ from drf_yasg.utils import swagger_auto_schema
 from GiftHubApp.models import *
 from GiftHubApp.serializers import *
 from GiftHubApp.utils import db_get_seq
-from GiftHubApp.open_api_params import create_user_schema
+from GiftHubApp.open_api_params import *
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -34,8 +34,8 @@ class Temp02ListAPI(APIView):
 class CreateUser(APIView):
     @swagger_auto_schema(
         operation_description="유저 데이터 생성",
-        request_body=create_user_schema(),
-        responses={200: UserSerializer, 400: 'Bad Request'}
+        request_body=create_user_input_schema(),
+        responses={200: create_user_output_schema(), 400: 'Bad Request'}
     )
     def post(self, request):
         # user data valid
