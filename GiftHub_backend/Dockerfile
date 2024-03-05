@@ -1,0 +1,6 @@
+FROM python:3.9.18
+WORKDIR /home/ksh/level2-3-recsys-finalproject-recsys-04/GiftHub_backend
+COPY . .
+RUN pip install -r requirements.txt
+CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+EXPOSE 8000
