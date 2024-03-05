@@ -1,15 +1,20 @@
+import json
 from django.shortcuts import render
 from django.http import JsonResponse
 from django.db.models import Q
+from django.db import transaction
 from rest_framework import status
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from rest_framework.renderers import JSONRenderer
+from drf_yasg.utils import swagger_auto_schema
 
-from GiftHubApp.models import Temp02
-from GiftHubApp.serializers import Temp02Serializer
+from GiftHubApp.models import *
+from GiftHubApp.serializers import *
+from GiftHubApp.utils import db_get_seq
+from GiftHubApp.open_api_params import create_user_schema
 
 @api_view(['GET'])
 @permission_classes([AllowAny])
@@ -18,8 +23,37 @@ def hello_rest_api(request):
     return Response(data, status=status.HTTP_200_OK)
 
 class Temp02ListAPI(APIView):
+    @swagger_auto_schema(
+        operation_description="temp02 조회 테스트"
+    )
     def get(self, request, id):
         queryset = Temp02.objects.filter(id=id)
         serializer = Temp02Serializer(queryset, many=True)
-        print(type(serializer.data))
         return Response(serializer.data)
+
+class CreateUser(APIView):
+    @swagger_auto_schema(
+        operation_description="유저 데이터 생성",
+        request_body=create_user_schema(),
+        responses={200: UserSerializer, 400: 'Bad Request'}
+    )
+    def post(self, request):
+        # user data valid
+        data = {key: request.data[key] for key in ["age", "sex"]}
+        user_id = db_get_seq('gifthub', User._meta.db_table)
+        data['user_id'] = user_id
+        serializer_user = UserSerializer(data=data)
+        if not serializer_user.is_valid():
+            return Response(serializer_user.errors, status=status.HTTP_400_BAD_REQUEST)
+        user_result = serializer_user.save()
+        response_user = serializer_user.data
+        
+        # user_detail data valid
+        data = {key: request.data[key] for key in ["price", "personality", "category_1"]}
+        data['user'] = user_id
+        serializer_user_detail = UserDetailSerializer(data=data)
+        if not serializer_user_detail.is_valid():
+            return Response(serializer_user_detail.errors, status=status.HTTP_400_BAD_REQUEST)
+        serializer_user_detail.save()
+        response_user_detail = serializer_user_detail.data
+        return Response({**response_user, **response_user_detail})

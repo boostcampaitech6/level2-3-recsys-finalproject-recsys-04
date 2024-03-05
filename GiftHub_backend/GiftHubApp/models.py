@@ -1,12 +1,4 @@
-# This is an auto-generated Django model module.
-# You'll have to do the following manually to clean this up:
-#   * Rearrange models' order
-#   * Make sure each model has one field with primary_key=True
-#   * Make sure each ForeignKey and OneToOneField has `on_delete` set to the desired behavior
-#   * Remove `managed = False` lines if you wish to allow Django to create, modify, and delete the table
-# Feel free to rename the models, but don't rename db_table values or field names.
 from django.db import models
-
 
 class Genderinference(models.Model):
     product_id = models.CharField(max_length=500, blank=True, null=True)
@@ -156,6 +148,47 @@ class Genderinference(models.Model):
         db_table = 'genderinference'
 
 
+class Product(models.Model):
+    product_id = models.IntegerField(unique=True)
+    product_name = models.CharField(max_length=100, blank=True, null=True)
+    brand = models.CharField(max_length=100, blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
+    num_review = models.CharField(max_length=100, blank=True, null=True)
+    price = models.FloatField(blank=True, null=True)
+    image_url = models.CharField(max_length=100, blank=True, null=True)
+    product_url = models.CharField(max_length=100, blank=True, null=True)
+    timestamp = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'product'
+
+
+class ProductCategory(models.Model):
+    category_1 = models.CharField(max_length=100, blank=True, null=True)
+    category_2 = models.CharField(max_length=100, blank=True, null=True)
+    category_3 = models.CharField(max_length=100, blank=True, null=True)
+    timestamp = models.DateTimeField()
+    product = models.OneToOneField(Product, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'product_category'
+
+
+class ProductSexGenerationInference(models.Model):
+    sex_generation = models.CharField(max_length=100, blank=True, null=True)
+    timestamp = models.DateTimeField()
+    product = models.OneToOneField(Product, models.DO_NOTHING)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'product_sex_generation_inference'
+
+
 class Rawdata(models.Model):
     product_id = models.CharField(max_length=50, blank=True, null=True)
     product_name = models.CharField(max_length=128, blank=True, null=True)
@@ -193,8 +226,9 @@ class Temp01(models.Model):
         app_label = 'GiftHubApp'
         db_table = 'temp01'
 
+
 class Temp02(models.Model):
-    id = models.AutoField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
     product_id = models.CharField(max_length=50, blank=True, null=True)
     product_name = models.CharField(max_length=128, blank=True, null=True)
     brand = models.CharField(max_length=50, blank=True, null=True)
@@ -211,3 +245,39 @@ class Temp02(models.Model):
         managed = False
         app_label = 'GiftHubApp'
         db_table = 'temp02'
+
+
+class User(models.Model):
+    user_id = models.IntegerField(primary_key=True)
+    sex = models.CharField(max_length=1, blank=True, null=True)
+    age = models.IntegerField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'user'
+
+class UserDetail(models.Model):
+    user = models.OneToOneField('User', models.DO_NOTHING, primary_key=True)
+    price = models.IntegerField(blank=True, null=True)
+    personality = models.IntegerField(blank=True, null=True)
+    category_1 = models.CharField(max_length=100, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'user_detail'
+
+
+class UserProductInteraction(models.Model):
+    user = models.OneToOneField('User', models.DO_NOTHING, primary_key=True)
+    product = models.ForeignKey('Product', models.DO_NOTHING, to_field='product_id')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'user_product_interation'
+        unique_together = (('user', 'product'),)
