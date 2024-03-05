@@ -1,0 +1,13 @@
+version: '3'
+
+services: 
+  backend:
+    build:
+      context: . 
+      dockerfile: Dockerfile
+      args:
+        - DEV=false
+    volumes:
+      - .:/home/ksh/level2-3-recsys-finalproject-recsys-04/GiftHub_backend
+    ports:
+      - 8000:8000
