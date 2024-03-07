@@ -27,7 +27,7 @@ def db_get_matched_items(db, category_1, price_type) -> json:
                               group by product_id, category_1
                               ) b
                                   on a.product_id = b.product_id
-                                  and a.price >= f_price_max('price_type', '1')
+                                  and a.price >= f_price_min('price_type', '1')
                                   and a.price <= f_price_max('price_type', '1')
                             """)
             columns = [col[0] for col in cursor.description]
