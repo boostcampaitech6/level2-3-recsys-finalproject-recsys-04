@@ -13,7 +13,7 @@ schema_view = get_schema_view(
         title="GiftHub API",
         default_version='V1.0.0',
         description="GiftHub Django Swagger",
-        terms_of_service="https://www.boostcourse.org/boostcampaitech6/",
+        terms_of_service="https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04",
         contact=openapi.Contact(email="ksstpgns1@gmail.com"),
         license=openapi.License(name="GiftHub License"),
     ),

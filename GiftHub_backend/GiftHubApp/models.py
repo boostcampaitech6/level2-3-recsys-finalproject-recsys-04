@@ -149,15 +149,16 @@ class Genderinference(models.Model):
 
 
 class Product(models.Model):
-    product_id = models.IntegerField(unique=True)
-    product_name = models.CharField(max_length=100, blank=True, null=True)
-    brand = models.CharField(max_length=100, blank=True, null=True)
+    id = models.BigAutoField(primary_key=True)
+    product_id = models.BigIntegerField(unique=True)
+    product_name = models.CharField(max_length=128, blank=True, null=True)
+    brand = models.CharField(max_length=50, blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
-    num_review = models.CharField(max_length=100, blank=True, null=True)
-    price = models.FloatField(blank=True, null=True)
-    image_url = models.CharField(max_length=100, blank=True, null=True)
-    product_url = models.CharField(max_length=100, blank=True, null=True)
-    timestamp = models.DateTimeField()
+    num_review = models.IntegerField(blank=True, null=True)
+    price = models.IntegerField(blank=True, null=True)
+    image_url = models.CharField(max_length=500, blank=True, null=True)
+    product_url = models.CharField(max_length=500, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = False
@@ -166,22 +167,23 @@ class Product(models.Model):
 
 
 class ProductCategory(models.Model):
-    category_1 = models.CharField(max_length=100, blank=True, null=True)
-    category_2 = models.CharField(max_length=100, blank=True, null=True)
-    category_3 = models.CharField(max_length=100, blank=True, null=True)
-    timestamp = models.DateTimeField()
-    product = models.OneToOneField(Product, models.DO_NOTHING)
+    id = models.BigAutoField(primary_key=True)
+    product = models.ForeignKey(Product, models.DO_NOTHING, to_field='product_id')
+    category_1 = models.CharField(max_length=20, blank=True, null=True)
+    category_2 = models.CharField(max_length=20, blank=True, null=True)
+    category_3 = models.CharField(max_length=20, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = False
-        app_label = 'GiftHubApp'
         db_table = 'product_category'
 
 
 class ProductSexGenerationInference(models.Model):
-    sex_generation = models.CharField(max_length=100, blank=True, null=True)
-    timestamp = models.DateTimeField()
-    product = models.OneToOneField(Product, models.DO_NOTHING)
+    id = models.BigAutoField(primary_key=True)
+    product = models.ForeignKey(Product, models.DO_NOTHING, to_field='product_id')
+    sex_generation = models.CharField(max_length=20, blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = False
@@ -248,9 +250,13 @@ class Temp02(models.Model):
 
 
 class User(models.Model):
-    user_id = models.IntegerField(primary_key=True)
+    id = models.BigAutoField(primary_key=True)
+    user_id = models.BigIntegerField(unique=True)
     sex = models.CharField(max_length=1, blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
+    personality = models.IntegerField(blank=True, null=True)
+    price_type = models.CharField(max_length=1, blank=True, null=True)
+    category_1 = models.CharField(max_length=20, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
@@ -258,26 +264,26 @@ class User(models.Model):
         app_label = 'GiftHubApp'
         db_table = 'user'
 
-class UserDetail(models.Model):
-    user = models.OneToOneField('User', models.DO_NOTHING, primary_key=True)
-    price = models.IntegerField(blank=True, null=True)
-    personality = models.IntegerField(blank=True, null=True)
-    category_1 = models.CharField(max_length=100, blank=True, null=True)
-    timestamp = models.DateTimeField(auto_now_add=True)
-
-    class Meta:
-        managed = False
-        app_label = 'GiftHubApp'
-        db_table = 'user_detail'
-
 
 class UserProductInteraction(models.Model):
-    user = models.OneToOneField('User', models.DO_NOTHING, primary_key=True)
-    product = models.ForeignKey('Product', models.DO_NOTHING, to_field='product_id')
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, models.DO_NOTHING, to_field='user_id')
+    product = models.ForeignKey(Product, models.DO_NOTHING, to_field='product_id')
     timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = False
         app_label = 'GiftHubApp'
-        db_table = 'user_product_interation'
-        unique_together = (('user', 'product'),)
+        db_table = 'user_product_interaction'
+
+
+class UserProductLike(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey(User, models.DO_NOTHING, to_field='user_id')
+    product = models.ForeignKey(Product, models.DO_NOTHING, to_field='product_id')
+    timestamp = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'user_product_like'
