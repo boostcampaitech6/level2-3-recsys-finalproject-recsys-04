@@ -1,4 +1,6 @@
 *.pyc
 *.sqlite3
+*.json
 __pycache__
 GiftHub_backend/GiftHubApp/migrations
+GiftHub_backend/GiftHubApp/images

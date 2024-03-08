@@ -5,10 +5,10 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
 
-from GiftHubApp.models import *
+from GiftHubApp.database.models import *
 from GiftHubApp.utils import *
 from GiftHubApp.open_api_params import *
-from .serializers import *
+from GiftHubApp.database.serializers import *
 
 @api_view(["GET"])
 @permission_classes([AllowAny])

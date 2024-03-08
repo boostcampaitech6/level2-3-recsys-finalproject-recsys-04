@@ -56,8 +56,7 @@ def matched_items_output_schema():
             },
             required=["product_id", "image_url"],
         )
-    
-    
+
 def create_user_product_interaction_input_schema():
     return openapi.Schema(
             type=openapi.TYPE_OBJECT,

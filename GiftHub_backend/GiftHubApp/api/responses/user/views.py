@@ -7,10 +7,11 @@ from rest_framework.response import Response
 from rest_framework.permissions import AllowAny
 from drf_yasg.utils import swagger_auto_schema
 
-from GiftHubApp.models import *
+from GiftHubApp.database.models import *
+from GiftHubApp.database.serializers import *
+from GiftHubApp.database.sql_executor import *
 from GiftHubApp.utils import *
 from GiftHubApp.open_api_params import *
-from .serializers import *
 
 class CreateUser(APIView):
     @swagger_auto_schema(
@@ -19,10 +20,19 @@ class CreateUser(APIView):
         responses={200: create_user_output_schema(), 400: "Bad Request"}
     )
     def post(self, request):
-        # user data valid
+        # validate user data
         data = {key: request.data[key] for key in ["age", "sex", "price_type", "personality", "category_1"]}
-        user_id = db_get_seq("gifthub", User._meta.db_table)
-        data["user_id"] = user_id
+        
+        # get user_id
+        try:
+            sql_exec = SqlExecutor("gifthub")
+            sql = sql_get_user_id()
+            df = sql_exec.get_sql_to_df(sql)
+        except Exception as e:
+            return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        # insert into user
+        data["user_id"] = int(df["user_id"])
         serializer_user = UserSerializer(data=data)
         if not serializer_user.is_valid():
             return Response(serializer_user.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -36,13 +46,19 @@ class MatchedItems(APIView):
         responses={200: matched_items_output_schema(), 400: "Bad Request"}
     )
     def get(self, request, user_id):
+        # get user category_1 and price_type
         qs = User.objects.filter(user_id=user_id)
         serializer = UserSerializer(qs, many=True)
-        category_1 = serializer.data[0]["category_1"]
-        price_type = serializer.data[0]["price_type"]
         
+        # matched-items sql executor
         try:
-            js = db_get_matched_items("gifthub", category_1, price_type)
+            sql_exec = SqlExecutor("gifthub")
+            sql_params = {
+                "data_1":serializer.data[0]["category_1"],
+                "data_2":serializer.data[0]["price_type"]
+            }
+            sql = sql_get_matched_items(**sql_params)
+            js = sql_exec.get_sql_to_json(sql)
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
