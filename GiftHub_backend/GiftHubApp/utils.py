@@ -19,7 +19,7 @@ def db_get_matched_items(db, category_1, price_type) -> json:
     try:
         with connections[db].cursor() as cursor:
             cursor.execute(f"""
-                            select a.product_id, a.product_url
+                            select a.product_id, a.image_url
                               from product a join (
                               select product_id, category_1
                                   from product_category

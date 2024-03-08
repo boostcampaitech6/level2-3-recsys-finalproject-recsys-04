@@ -56,3 +56,24 @@ def matched_items_output_schema():
             },
             required=["product_id", "image_url"],
         )
+    
+    
+def create_user_product_interaction_input_schema():
+    return openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "user_id": openapi.Schema(type=openapi.TYPE_STRING, description="User user_id", default="88"),
+                "product_id": openapi.Schema(type=openapi.TYPE_STRING, description="Product product_id", default="100011889"),
+            },
+            required=["user_id", "product_id"],
+        )
+    
+def create_user_product_like_input_schema():
+    return openapi.Schema(
+            type=openapi.TYPE_OBJECT,
+            properties={
+                "user_id": openapi.Schema(type=openapi.TYPE_STRING, description="User user_id", default="88"),
+                "product_id": openapi.Schema(type=openapi.TYPE_STRING, description="Product product_id", default="100011889"),
+            },
+            required=["user_id", "product_id"],
+        )

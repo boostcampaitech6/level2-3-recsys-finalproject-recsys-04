@@ -150,7 +150,7 @@ class Genderinference(models.Model):
 
 class Product(models.Model):
     id = models.BigAutoField(primary_key=True)
-    product_id = models.BigIntegerField(unique=True)
+    product_id = models.CharField(max_length=20, blank=False, null=False, unique=True)
     product_name = models.CharField(max_length=128, blank=True, null=True)
     brand = models.CharField(max_length=50, blank=True, null=True)
     rating = models.FloatField(blank=True, null=True)
@@ -251,7 +251,7 @@ class Temp02(models.Model):
 
 class User(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user_id = models.BigIntegerField(unique=True)
+    user_id = models.CharField(max_length=20, blank=False, null=False, unique=True)
     sex = models.CharField(max_length=1, blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     personality = models.IntegerField(blank=True, null=True)
