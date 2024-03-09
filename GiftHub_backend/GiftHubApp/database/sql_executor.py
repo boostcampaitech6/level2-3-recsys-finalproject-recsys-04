@@ -88,5 +88,52 @@ def sql_get_matched_items_back(**params: dict) -> pd.DataFrame:
         on a.product_id = b.product_id
      where a.price >= f_price_min('price_type', '{data[1]}')
        and a.price <= f_price_max('price_type', '{data[1]}')
+     order by RAND() LIMIT 27
+    """
+    return sql
+
+def sql_get_popular_items_top10(**params: dict) -> pd.DataFrame:
+    data = params_to_data(params)
+    sql = f"""
+    select product_id, image_url
+    from (
+            select ROW_NUMBER() OVER(PARTITION BY b.category_1, b.category_2, b.category_3 ORDER BY a.rating desc, a.num_review desc) as rank,
+                a.product_id, a.product_name, a.brand, b.category_1, b.category_2, b.category_3, a.rating, a.num_review, a.price, a.image_url, a.product_url
+            from product a join product_category b
+                on a.product_id = b.product_id
+            where (b.category_1, b.category_2, IFNULL(b.category_3, '')) in (
+                                                                            select b.category_1, b.category_2, IFNULL(b.category_3, '')
+                                                                            from product a join product_category b
+                                                                                on a.product_id = b.product_id
+                                                                            where a.product_id in (
+                                                                                                    select b.product_id
+                                                                                                    from user a join user_product_interaction b
+                                                                                                        on a.user_id = b.user_id
+                                                                                                    where a.user_id = '87'
+                                                                                                    )
+                                                                            group by b.category_1, b.category_2, b.category_3
+                                                                            )
+            and a.price >= f_price_min('price_type', '{data[1]}')
+            and a.price <= f_price_max('price_type', '{data[1]}')
+        ) A
+    where rank <= 10
+    order by rand() LIMIT 10
+    """
+    return sql
+
+def sql_get_popular_items(**params: dict) -> pd.DataFrame:
+    data = params_to_data(params)
+    sql = f"""
+    select a.product_id, a.image_url
+      from product a join (
+                              select product_id, category_1
+                                  from product_category
+                              where category_1 = '{data[0]}'
+                              group by product_id, category_1
+                             ) b
+        on a.product_id = b.product_id
+     where a.price >= f_price_min('price_type', '{data[1]}')
+       and a.price <= f_price_max('price_type', '{data[1]}')
+     order by RAND() LIMIT 27
     """
     return sql
