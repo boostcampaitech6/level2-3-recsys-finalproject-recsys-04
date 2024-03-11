@@ -6,7 +6,7 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-20.04.3
+    runs-on: ubuntu-20.04
     strategy:
       fail-fast: false
       matrix:
@@ -25,6 +25,5 @@ jobs:
         pip install -r requirements.txt
     - name: Test Backend Django Excecution
       run: |
-        # Run Python script
         cd GiftHub_backend
-        python manage.py runserver 0.0.0.0:8000
+        python manage.py test
