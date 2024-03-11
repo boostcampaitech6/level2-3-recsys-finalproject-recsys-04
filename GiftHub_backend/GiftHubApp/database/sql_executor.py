@@ -78,7 +78,7 @@ def sql_get_matched_items(**params: dict) -> pd.DataFrame:
 def sql_get_matched_items_back(**params: dict) -> pd.DataFrame:
     data = params_to_data(params)
     sql = f"""
-    select a.product_id, a.image_url
+    select a.product_id, a.product_name, a.price, a.image_url
       from product a join (
                               select product_id, category_1
                                   from product_category
@@ -95,7 +95,7 @@ def sql_get_matched_items_back(**params: dict) -> pd.DataFrame:
 def sql_get_popular_items_top10(**params: dict) -> pd.DataFrame:
     data = params_to_data(params)
     sql = f"""
-    select product_id, image_url
+    select product_id, product_name, price, image_url
     from (
             select ROW_NUMBER() OVER(PARTITION BY b.category_1, b.category_2, b.category_3 ORDER BY a.rating desc, a.num_review desc) as rank,
                 a.product_id, a.product_name, a.brand, b.category_1, b.category_2, b.category_3, a.rating, a.num_review, a.price, a.image_url, a.product_url
