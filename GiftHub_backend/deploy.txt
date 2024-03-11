@@ -1,5 +1,5 @@
 cd /home/ksh/level2-3-recsys-finalproject-recsys-04/GiftHub_backend
-VERSION=1.1.13
+VERSION=1.1.14
 docker build . --tag django:${VERSION}
 docker stop django
 docker rm django
