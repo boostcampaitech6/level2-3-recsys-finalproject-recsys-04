@@ -255,7 +255,7 @@ class User(models.Model):
     sex = models.CharField(max_length=1, blank=True, null=True)
     age = models.IntegerField(blank=True, null=True)
     personality = models.IntegerField(blank=True, null=True)
-    price_type = models.CharField(max_length=1, blank=True, null=True)
+    price_type = models.CharField(max_length=2, blank=True, null=True)
     category_1 = models.CharField(max_length=20, blank=True, null=True)
     timestamp = models.DateTimeField(auto_now_add=True)
 

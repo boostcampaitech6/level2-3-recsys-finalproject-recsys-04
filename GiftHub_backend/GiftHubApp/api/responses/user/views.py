@@ -33,7 +33,7 @@ class CreateUser(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
         # insert into user
-        data["user_id"] = int(df["user_id"])
+        data["user_id"] = int(df["user_id"][0])
         serializer_user = UserSerializer(data=data)
         if not serializer_user.is_valid():
             return Response(serializer_user.errors, status=status.HTTP_400_BAD_REQUEST)
