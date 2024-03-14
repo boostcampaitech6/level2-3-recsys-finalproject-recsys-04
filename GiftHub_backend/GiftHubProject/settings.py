@@ -137,6 +137,9 @@ DATABASES = {
 IMAGE_URL = '/image/'
 IMAGE_ROOT = os.path.join(BASE_DIR, 'GiftHubApp/images')
 
+# model predict url
+LGBM_PROBA = "http://101.79.11.75:8011/invocations"
+
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

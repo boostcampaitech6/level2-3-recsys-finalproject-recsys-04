@@ -4,19 +4,28 @@ import requests
 class APIRequest():
     def __init__(self):
         self.headers = {'Content-Type': 'application/json'}
+        self.url = ""
+        self.params = {}
+        self.data = {}
         
-    def url(self, url: str):
-        if not type(str):
+    def set_url(self, url: str):
+        if not isinstance(url, str):
             raise TypeError("Provided value is not of type str.")
         self.url = url
         
-    def params(self, params: dict):
-        if not type(params):
+    def set_params(self, params: dict):
+        """
+        Use get
+        """
+        if not isinstance(params, dict):
             raise TypeError("Provided value is not of type dict.")
         self.params = params
 
-    def data(self, data: dict):
-        if not type(data):
+    def set_data(self, data: dict):
+        """
+        Use post
+        """
+        if not isinstance(data, dict):
             raise TypeError("Provided value is not of type dict.")
         self.data = data
 
@@ -27,7 +36,7 @@ class APIRequest():
             return response.json()  # 응답 데이터 처리
         else:
             # 요청 실패
-            return {'error': 'Request failed'}
+            raise response.json()
 
     def post(self):
         response = requests.post(self.url, json=self.data, headers=self.headers)
@@ -36,4 +45,4 @@ class APIRequest():
             return response.json()  # 응답 데이터 처리
         else:
             # 요청 실패
-            return {'error': 'Request failed'}
+            raise response.json()
