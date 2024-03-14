@@ -12,6 +12,8 @@ from GiftHubApp.database.serializers import *
 from GiftHubApp.database.sql_executor import *
 from GiftHubApp.utils import *
 from GiftHubApp.open_api_params import *
+from GiftHubApp.api.requests.request import *
+from GiftHubApp.api.requests.mlflow_request import *
 
 class CreateUser(APIView):
     @swagger_auto_schema(
@@ -52,17 +54,23 @@ class MatchedItems(APIView):
         qs = User.objects.filter(user_id=user_id)
         serializer = UserSerializer(qs, many=True)
         
-        # matched-items sql executor
+        # get one filtered_item
         try:
             sql_exec = SqlExecutor("gifthub")
             sql_params = {
                 "data_1":serializer.data[0]["category_1"],
                 "data_2":serializer.data[0]["price_type"]
             }
-            sql = sql_get_matched_items_back(**sql_params)
-            js = sql_exec.get_sql_to_json(sql)
+            sql = sql_get_filtered_item(**sql_params)
+            df = sql_exec.get_sql_to_df(sql)
+            product_id = df["product_id"][0]
         except Exception as e:
             return Response(status=status.HTTP_400_BAD_REQUEST)
+        
+        # lgbm similarlity
+        predictions = lgbm_similarlity(product_id)
+        str_js = predictions.to_json(force_ascii=False, orient="records", indent=4)
+        js = json.loads(str_js)
         
         return Response(js)
 
