@@ -287,3 +287,22 @@ class UserProductLike(models.Model):
         managed = False
         app_label = 'GiftHubApp'
         db_table = 'user_product_like'
+        
+class FilteredRawdata(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    product_id = models.CharField(max_length=20, blank=True, null=True)
+    product_name = models.CharField(max_length=128, blank=True, null=True)
+    brand = models.CharField(max_length=50, blank=True, null=True)
+    category_1 = models.CharField(max_length=20, blank=True, null=True)
+    category_2 = models.CharField(max_length=20, blank=True, null=True)
+    category_3 = models.CharField(max_length=20, blank=True, null=True)
+    rating = models.FloatField(blank=True, null=True)
+    num_review = models.IntegerField(blank=True, null=True)
+    price = models.IntegerField(blank=True, null=True)
+    image_url = models.CharField(max_length=500, blank=True, null=True)
+    product_url = models.CharField(max_length=500, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'filtered_rawdata'

@@ -56,7 +56,7 @@ def sql_get_user_id() -> str:
     """
     return sql
 
-def sql_get_matched_items(**params: dict) -> pd.DataFrame:
+def sql_get_matched_items(**params: dict) -> str:
     data = params_to_data(params)
     sql = f"""
     select a.product_id, c.data_1 as image_url
@@ -75,7 +75,7 @@ def sql_get_matched_items(**params: dict) -> pd.DataFrame:
     """
     return sql
 
-def sql_get_matched_items_back(**params: dict) -> pd.DataFrame:
+def sql_get_matched_items_back(**params: dict) -> str:
     data = params_to_data(params)
     sql = f"""
     select a.product_id, a.product_name, a.price, a.image_url
@@ -92,7 +92,7 @@ def sql_get_matched_items_back(**params: dict) -> pd.DataFrame:
     """
     return sql
 
-def sql_get_popular_items_top10(**params: dict) -> pd.DataFrame:
+def sql_get_popular_items_top10(**params: dict) -> str:
     data = params_to_data(params)
     sql = f"""
     select product_id, product_name, price, image_url
@@ -121,7 +121,7 @@ def sql_get_popular_items_top10(**params: dict) -> pd.DataFrame:
     """
     return sql
 
-def sql_get_popular_items(**params: dict) -> pd.DataFrame:
+def sql_get_popular_items(**params: dict) -> str:
     data = params_to_data(params)
     sql = f"""
     select a.product_id, a.image_url
@@ -135,5 +135,17 @@ def sql_get_popular_items(**params: dict) -> pd.DataFrame:
      where a.price >= f_price_min('price_type', '{data[1]}')
        and a.price <= f_price_max('price_type', '{data[1]}')
      order by RAND() LIMIT 27
+    """
+    return sql
+
+def sql_get_filtered_item(**params: dict) -> str:
+    data = params_to_data(params)
+    sql = f"""
+    select product_id
+      from filtered_rawdata
+      where category_1 = '{data[0]}'
+      and price >= f_price_min('price_type', '{data[1]}')
+      and price <= f_price_max('price_type', '{data[1]}')
+      order by rand() LIMIT 1
     """
     return sql

@@ -21,3 +21,8 @@ class UserProductLikeSerializer(serializers.ModelSerializer) :
     class Meta :
         model = UserProductLike
         fields = '__all__'
+        
+class FilteredRawdataSerializer(serializers.ModelSerializer) :
+    class Meta :
+        model = FilteredRawdata
+        fields = '__all__'
