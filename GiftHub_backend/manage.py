@@ -2,11 +2,27 @@
 """Django's command-line utility for administrative tasks."""
 import os
 import sys
+from django.conf import settings
 
+def mlflow_model_download():
+    # mlflow model download
+    import mlflow
+    
+    mlflow.set_tracking_uri(uri=settings.MLFLOW_URL)
+    
+    path_category_proba = settings.PATH_CATEGORY_PROBA
+    mlflow.artifacts.download_artifacts(artifact_uri="models:/ca_proba/1", dst_path=path_category_proba)
+    
+    from GiftHubApp.model.mlflow_load_model import model_ca_proba
+    
 
 def main():
     """Run administrative tasks."""
     os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'GiftHubProject.settings')
+    
+    if settings.MODEL_DOWNLOAD_YN == "Y":
+        mlflow_model_download()
+    
     try:
         from django.core.management import execute_from_command_line
     except ImportError as exc:

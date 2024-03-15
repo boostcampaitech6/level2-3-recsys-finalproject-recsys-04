@@ -137,7 +137,12 @@ DATABASES = {
 IMAGE_URL = '/image/'
 IMAGE_ROOT = os.path.join(BASE_DIR, 'GiftHubApp/images')
 
-# model predict url
+# mlflow url
+MODEL_DOWNLOAD_YN = "N"
+MLFLOW_URL = "http://101.79.11.75:8010"
+PATH_CATEGORY_PROBA = os.path.join(BASE_DIR, 'mlartifacts/category_proba')
+
+
 LGBM_PROBA = "http://101.79.11.75:8011/invocations"
 
 # Password validation

@@ -9,6 +9,7 @@ from drf_yasg import openapi
 
 router = routers.DefaultRouter()
 
+# Swagger Setting
 schema_view = get_schema_view(
     openapi.Info(
         title="GiftHub API",
