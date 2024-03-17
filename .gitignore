@@ -3,5 +3,6 @@
 *.json
 __pycache__
 GiftHub_mlflow
+GiftHub_backend/mlartifacts
 GiftHub_backend/GiftHubApp/migrations
 GiftHub_backend/GiftHubApp/images
