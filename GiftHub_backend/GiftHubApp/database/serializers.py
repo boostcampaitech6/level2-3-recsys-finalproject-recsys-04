@@ -26,3 +26,8 @@ class FilteredRawdataSerializer(serializers.ModelSerializer) :
     class Meta :
         model = FilteredRawdata
         fields = '__all__'
+        
+class AmazonProductSerializer(serializers.ModelSerializer) :
+    class Meta :
+        model = AmazonProduct
+        fields = '__all__'

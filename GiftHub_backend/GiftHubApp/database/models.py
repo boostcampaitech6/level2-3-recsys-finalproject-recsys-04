@@ -306,3 +306,37 @@ class FilteredRawdata(models.Model):
         managed = False
         app_label = 'GiftHubApp'
         db_table = 'filtered_rawdata'
+        
+        
+class AmazonProduct(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    product_id = models.CharField(unique=True, max_length=50, blank=True, null=True)
+    product_name = models.CharField(max_length=256, blank=True, null=True)
+    image_url = models.CharField(max_length=128, blank=True, null=True)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'amazon_product'
+        
+class AmazonUserInteraction(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user_id = models.CharField(max_length=50, blank=True, null=True)
+    product = models.ForeignKey('AmazonProduct', models.DO_NOTHING, to_field='product_id', blank=True, null=True)
+    timestamp = models.DateTimeField(blank=True, null=True)
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'amazon_user_interaction'
+        
+class AmazonUserProductLike(models.Model):
+    id = models.BigAutoField(primary_key=True)
+    user = models.ForeignKey('User', models.DO_NOTHING, to_field='user_id', blank=True, null=True)
+    product = models.ForeignKey('AmazonProduct', models.DO_NOTHING, to_field='product_id', blank=True, null=True)
+    timestamp = models.DateTimeField()
+
+    class Meta:
+        managed = False
+        app_label = 'GiftHubApp'
+        db_table = 'amazon_user_product_like'
