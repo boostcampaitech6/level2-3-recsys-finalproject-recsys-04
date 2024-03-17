@@ -13,8 +13,6 @@ def mlflow_model_download():
     path_category_proba = settings.PATH_CATEGORY_PROBA
     mlflow.artifacts.download_artifacts(artifact_uri="models:/ca_proba/1", dst_path=path_category_proba)
     
-    from GiftHubApp.model.mlflow_load_model import model_ca_proba
-    
 
 def main():
     """Run administrative tasks."""
