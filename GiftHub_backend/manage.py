@@ -3,6 +3,8 @@
 import os
 import sys
 from django.conf import settings
+from mlartifacts.bert4rec.model import BERT4Rec, params
+from mlartifacts.bert4rec.module import *
 
 def mlflow_model_download():
     # mlflow model download

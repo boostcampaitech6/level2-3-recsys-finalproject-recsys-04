@@ -7,7 +7,7 @@ from GiftHubApp.database.sql_executor import *
 from GiftHubApp.database.serializers import *
 from GiftHubApp.database.models import *
 from GiftHubApp.api.requests.request import *
-from GiftHubApp.models.model_load import model_ca_proba, model_bert4rec, params
+from GiftHubApp.models.model_load import model_ca_proba, model_bert4rec
 
 # mlflow naver serving
 def lgbm_similarlity(product_id):
@@ -95,7 +95,7 @@ def bert4rec_predict(list_product_id: list):
     with open(os.path.join(settings.PATH_BERT4REC, "item.json"), "r") as json_file:
         item2idx = json.load(json_file)
     idx2item = {(v):k for k,v in item2idx.items()}
-    max_len = params["max_len"]
+    max_len = 20
     
     list_product_id_copy = ["B00JO5MTXI", "B00LD84PGS", "B00OR6KCAQ"]
     
