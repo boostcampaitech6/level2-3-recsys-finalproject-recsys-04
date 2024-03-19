@@ -7,7 +7,7 @@ from GiftHubApp.database.sql_executor import *
 from GiftHubApp.database.serializers import *
 from GiftHubApp.database.models import *
 from GiftHubApp.api.requests.request import *
-from GiftHubApp.models.model_load import model_ca_proba, model_bert4rec
+from GiftHubApp.models.model_load import model_ca_proba, model_bert4rec, model_ease
 
 # mlflow naver serving
 def lgbm_similarlity(product_id):
@@ -97,10 +97,8 @@ def bert4rec_predict(list_product_id: list):
     idx2item = {(v):k for k,v in item2idx.items()}
     max_len = 20
     
-    list_product_id_copy = ["B00JO5MTXI", "B00LD84PGS", "B00OR6KCAQ"]
-    
     list_item_idx = []
-    for product_id in list_product_id_copy:
+    for product_id in list_product_id:
         list_item_idx.append(item2idx[product_id] + 1)
     
     seq = list_item_idx
@@ -124,3 +122,19 @@ def bert4rec_predict(list_product_id: list):
         list_predict.append(idx2item[idx_predict])
             
     return list_predict
+
+def ease_predict(df_user_interaction: pd.DataFrame):
+    userid = "reviewerID"
+    itemid = "asin"
+    
+    new_data = df_user_interaction[["user_id", "product"]]
+    new_data.columns = [userid, itemid]
+    new_data["rating"] = 1
+
+    # 새로운 데이터에 맞게 finetuning
+    model_ease.fine_tune(new_data)
+
+    # 클라이언트 input에 대한 predict
+    client_result = model_ease.predict_all(new_data, k=10)
+
+    return client_result['predicted_items'][0]

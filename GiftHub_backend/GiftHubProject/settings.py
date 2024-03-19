@@ -142,8 +142,11 @@ MODEL_DOWNLOAD_YN = "N"
 MLFLOW_URL = "http://101.79.11.75:8010"
 PATH_CATEGORY_PROBA = os.path.join(BASE_DIR, 'mlartifacts/category_proba')
 
-# model bert4rec
-PATH_BERT4REC = os.path.join(BASE_DIR, 'mlartifacts/bert4rec')
+## AMAZON
+# model BERT4rec
+PATH_BERT4REC = os.path.join(BASE_DIR, 'mlartifacts/BERT4Rec')
+# model EASE
+PATH_EASE = os.path.join(BASE_DIR, 'mlartifacts/EASE')
 
 
 LGBM_PROBA = "http://101.79.11.75:8011/invocations"

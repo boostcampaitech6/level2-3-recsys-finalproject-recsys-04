@@ -2,7 +2,7 @@ import torch
 import torch.nn as nn
 import numpy as np
 
-from .module import BERT4RecBlock
+from module import BERT4RecBlock
 
 params = {
     "max_len":20,

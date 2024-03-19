@@ -3,8 +3,12 @@
 import os
 import sys
 from django.conf import settings
-from mlartifacts.bert4rec.model import BERT4Rec, params
-from mlartifacts.bert4rec.module import *
+
+sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "mlartifacts"), "BERT4Rec"))
+from model import BERT4Rec, params
+from module import *
+sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "mlartifacts"), "EASE"))
+import src
 
 def mlflow_model_download():
     # mlflow model download
