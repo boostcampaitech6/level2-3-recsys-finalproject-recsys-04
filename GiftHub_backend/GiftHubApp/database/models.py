@@ -318,23 +318,23 @@ class AmazonProduct(models.Model):
         managed = False
         app_label = 'GiftHubApp'
         db_table = 'amazon_product'
-        
-class AmazonUserInteraction(models.Model):
+
+class AmazonUserProductInteraction(models.Model):
     id = models.BigAutoField(primary_key=True)
-    user_id = models.CharField(max_length=50, blank=True, null=True)
+    user = models.ForeignKey('User', models.DO_NOTHING, to_field='user_id', blank=True, null=True)
     product = models.ForeignKey('AmazonProduct', models.DO_NOTHING, to_field='product_id', blank=True, null=True)
-    timestamp = models.DateTimeField(blank=True, null=True)
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = False
         app_label = 'GiftHubApp'
-        db_table = 'amazon_user_interaction'
+        db_table = 'amazon_user_product_interaction'
         
 class AmazonUserProductLike(models.Model):
     id = models.BigAutoField(primary_key=True)
     user = models.ForeignKey('User', models.DO_NOTHING, to_field='user_id', blank=True, null=True)
     product = models.ForeignKey('AmazonProduct', models.DO_NOTHING, to_field='product_id', blank=True, null=True)
-    timestamp = models.DateTimeField()
+    timestamp = models.DateTimeField(auto_now_add=True)
 
     class Meta:
         managed = False

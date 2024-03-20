@@ -147,6 +147,8 @@ PATH_CATEGORY_PROBA = os.path.join(BASE_DIR, 'mlartifacts/category_proba')
 PATH_BERT4REC = os.path.join(BASE_DIR, 'mlartifacts/BERT4Rec')
 # model EASE
 PATH_EASE = os.path.join(BASE_DIR, 'mlartifacts/EASE')
+# model lightgcn
+PATH_LGCN = os.path.join(BASE_DIR, 'mlartifacts/lightgcn')
 
 
 LGBM_PROBA = "http://101.79.11.75:8011/invocations"

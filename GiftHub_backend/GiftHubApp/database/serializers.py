@@ -27,12 +27,18 @@ class FilteredRawdataSerializer(serializers.ModelSerializer) :
         model = FilteredRawdata
         fields = '__all__'
 
-class AmazonUserInteractionSerializer(serializers.ModelSerializer) :
-    class Meta :
-        model = AmazonUserInteraction
-        fields = '__all__'
-
 class AmazonProductSerializer(serializers.ModelSerializer) :
     class Meta :
         model = AmazonProduct
         fields = ["product_id", "image_url"]
+
+class AmazonUserProductInteractionSerializer(serializers.ModelSerializer) :
+    class Meta :
+        model = AmazonUserProductInteraction
+        fields = '__all__'
+
+class AmazonUserProductLikeSerializer(serializers.ModelSerializer):
+    class Meta :
+        model = AmazonUserProductLike
+        fields = '__all__'
+    

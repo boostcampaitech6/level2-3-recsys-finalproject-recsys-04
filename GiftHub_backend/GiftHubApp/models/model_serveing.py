@@ -1,13 +1,14 @@
 import sys, os
 import pandas as pd
 import numpy as np
+import torch
 from django.conf import settings
 
 from GiftHubApp.database.sql_executor import *
 from GiftHubApp.database.serializers import *
 from GiftHubApp.database.models import *
 from GiftHubApp.api.requests.request import *
-from GiftHubApp.models.model_load import model_ca_proba, model_bert4rec, model_ease
+from GiftHubApp.models.model_load import model_ca_proba, model_bert4rec, model_ease, model_lightgcn
 
 # mlflow naver serving
 def lgbm_similarlity(product_id):
@@ -127,7 +128,7 @@ def ease_predict(df_user_interaction: pd.DataFrame):
     userid = "reviewerID"
     itemid = "asin"
     
-    new_data = df_user_interaction[["user_id", "product"]]
+    new_data = df_user_interaction[["user", "product"]]
     new_data.columns = [userid, itemid]
     new_data["rating"] = 1
 
@@ -138,3 +139,21 @@ def ease_predict(df_user_interaction: pd.DataFrame):
     client_result = model_ease.predict_all(new_data, k=10)
 
     return client_result['predicted_items'][0]
+
+def lightgcn_predict(list_product_id: list):
+    sys.path.append(settings.PATH_LGCN)
+    from preprocessing import Preprocess
+    from recommend import encode_session_items,infer_embeddings,recommend_item
+    
+    device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
+    config = {
+        "n_batch": 256,
+    }
+    
+    preprocess = Preprocess(os.path.join(settings.PATH_LGCN, "filtered_data.csv"), config)
+    top_k = 10
+    encoded_session_items = encode_session_items(preprocess, list_product_id)
+    session_user_embedding, item_embeddings = infer_embeddings(model_lightgcn, encoded_session_items, preprocess.num_users, preprocess.num_items, device)
+    recommended_user_indices = recommend_item(session_user_embedding, item_embeddings, top_k)
+    recommended_items = [preprocess.item_decoder[idx] for idx in recommended_user_indices if idx in preprocess.item_decoder]
+    return recommended_items

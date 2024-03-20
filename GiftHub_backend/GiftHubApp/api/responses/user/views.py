@@ -132,10 +132,9 @@ class UserInteraction(APIView):
         responses={200: "HTTP 200 OK", 400: "Bad Request"}
     )
     def delete(self, request):
-        data = {}
         user_id = request.data['user_id']
         product_id = request.data['product_id']
-        queryset = UserProductInteraction.objects.filter(Q(user_id=user_id) | Q(product_id=product_id))
+        queryset = UserProductInteraction.objects.filter(Q(user_id=user_id) & Q(product_id=product_id))
         queryset.delete()
         return Response(status=status.HTTP_200_OK)
     
@@ -166,6 +165,6 @@ class UserLike(APIView):
     def delete(self, request):
         user_id = request.data['user_id']
         product_id = request.data['product_id']
-        queryset = UserProductLike.objects.filter(Q(user_id=user_id) | Q(product_id=product_id))
+        queryset = UserProductLike.objects.filter(Q(user_id=user_id) & Q(product_id=product_id))
         queryset.delete()
         return Response(status=status.HTTP_200_OK)

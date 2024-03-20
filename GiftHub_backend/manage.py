@@ -8,7 +8,7 @@ sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file
 from model import BERT4Rec, params
 from module import *
 sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "mlartifacts"), "EASE"))
-import src
+sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "mlartifacts"), "lightgcn"))
 
 def mlflow_model_download():
     # mlflow model download
