@@ -10,6 +10,8 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 import os
+import mlflow
+import torch
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +27,7 @@ SECRET_KEY = 'django-insecure-57i2bu1u3-rf*3#q4^x#4q4=#$m-_-dbj674(egsahl7pgso6(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['101.79.11.75', '127.0.0.1', '0.0.0.0', 'localhost']
+ALLOWED_HOSTS = ['175.45.193.211', '127.0.0.1', '0.0.0.0', 'localhost']
 
 
 # Application definition
@@ -137,21 +139,33 @@ DATABASES = {
 IMAGE_URL = '/image/'
 IMAGE_ROOT = os.path.join(BASE_DIR, 'GiftHubApp/images')
 
-# mlflow url
+# mlflow connect
+
+if torch.cuda.is_available():
+    DEVICE = "cuda"
+else:
+    DEVICE = "cpu"
+
 MODEL_DOWNLOAD_YN = "N"
-MLFLOW_URL = "http://101.79.11.75:8010"
-PATH_CATEGORY_PROBA = os.path.join(BASE_DIR, 'mlartifacts/category_proba')
+
+MLFLOW_URL = "http://175.45.193.211:8010"
+mlflow.set_tracking_uri(MLFLOW_URL)
+
+## NAVER
+LGBM_PATH = os.path.join(BASE_DIR, 'mlartifacts/category_proba')
+LGBM_VER = "models:/ca_proba/1"
+# LGBM_PROBA = f"{MLFLOW_URL}/invocations"
 
 ## AMAZON
 # model BERT4rec
-PATH_BERT4REC = os.path.join(BASE_DIR, 'mlartifacts/BERT4Rec')
+BERT4REC_PATH = os.path.join(BASE_DIR, 'mlartifacts/BERT4Rec')
+BERT4REC_VER = "models:/bert4rec/3"
 # model EASE
-PATH_EASE = os.path.join(BASE_DIR, 'mlartifacts/EASE')
+EASE_PATH = os.path.join(BASE_DIR, 'mlartifacts/EASE')
+EASE_VER = "models:/ease/1"
 # model lightgcn
-PATH_LGCN = os.path.join(BASE_DIR, 'mlartifacts/lightgcn')
-
-
-LGBM_PROBA = "http://101.79.11.75:8011/invocations"
+LGCN_PATH = os.path.join(BASE_DIR, 'mlartifacts/lightgcn')
+LGCN_VER = "models:/lightgcn/1"
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators

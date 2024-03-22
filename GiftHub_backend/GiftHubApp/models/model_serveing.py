@@ -93,7 +93,7 @@ def find_similar_products(user_product_id, product_id_prob, n=10):
 def bert4rec_predict(list_product_id: list):
     import torch
     
-    with open(os.path.join(settings.PATH_BERT4REC, "item.json"), "r") as json_file:
+    with open(os.path.join(settings.BERT4REC_PATH, "item.json"), "r") as json_file:
         item2idx = json.load(json_file)
     idx2item = {(v):k for k,v in item2idx.items()}
     max_len = 20
@@ -141,7 +141,7 @@ def ease_predict(df_user_interaction: pd.DataFrame):
     return client_result['predicted_items'][0]
 
 def lightgcn_predict(list_product_id: list):
-    sys.path.append(settings.PATH_LGCN)
+    sys.path.append(settings.LGCN_PATH)
     from preprocessing import Preprocess
     from recommend import encode_session_items,infer_embeddings,recommend_item
     
@@ -150,7 +150,7 @@ def lightgcn_predict(list_product_id: list):
         "n_batch": 256,
     }
     
-    preprocess = Preprocess(os.path.join(settings.PATH_LGCN, "filtered_data.csv"), config)
+    preprocess = Preprocess(os.path.join(settings.LGCN_PATH, "filtered_data.csv"), config)
     top_k = 10
     encoded_session_items = encode_session_items(preprocess, list_product_id)
     session_user_embedding, item_embeddings = infer_embeddings(model_lightgcn, encoded_session_items, preprocess.num_users, preprocess.num_items, device)

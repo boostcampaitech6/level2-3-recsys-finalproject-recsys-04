@@ -5,8 +5,6 @@ import sys
 from django.conf import settings
 
 sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "mlartifacts"), "BERT4Rec"))
-from model import BERT4Rec, params
-from module import *
 sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "mlartifacts"), "EASE"))
 sys.path.append(os.path.join(os.path.join(os.path.abspath(os.path.dirname(__file__)), "mlartifacts"), "lightgcn"))
 
@@ -14,10 +12,10 @@ def mlflow_model_download():
     # mlflow model download
     import mlflow
     
-    mlflow.set_tracking_uri(uri=settings.MLFLOW_URL)
-    
-    path_category_proba = settings.PATH_CATEGORY_PROBA
-    mlflow.artifacts.download_artifacts(artifact_uri="models:/ca_proba/1", dst_path=path_category_proba)
+    mlflow.artifacts.download_artifacts(artifact_uri=settings.LGBM_VER, dst_path=settings.LGBM_PATH)
+    mlflow.artifacts.download_artifacts(artifact_uri=settings.BERT4REC_VER, dst_path=settings.BERT4REC_PATH)
+    mlflow.artifacts.download_artifacts(artifact_uri=settings.EASE_VER, dst_path=settings.EASE_PATH)
+    mlflow.artifacts.download_artifacts(artifact_uri=settings.LGCN_VER, dst_path=settings.LGCN_PATH)
     
 
 def main():
@@ -26,6 +24,7 @@ def main():
     
     if settings.MODEL_DOWNLOAD_YN == "Y":
         mlflow_model_download()
+    print(f"Device Setting = {settings.DEVICE}")
     
     try:
         from django.core.management import execute_from_command_line
