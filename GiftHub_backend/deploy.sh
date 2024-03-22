@@ -1,3 +1,4 @@
+#!/bin/bash
 cd /home/ksh/camp/level2-3-recsys-finalproject-recsys-04/GiftHub_backend
 VERSION=1.2.0
 docker build --no-cache . --tag django:${VERSION}
