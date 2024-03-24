@@ -13,6 +13,7 @@ from GiftHubApp.database.sql_executor import *
 from GiftHubApp.utils import *
 from GiftHubApp.open_api_params import *
 from GiftHubApp.api.requests.request import *
+from GiftHubApp.api.requests.model_request import *
 
 class CreateUser(APIView):
     @swagger_auto_schema(
