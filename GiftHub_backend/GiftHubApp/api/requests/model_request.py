@@ -1,7 +1,4 @@
-import sys, os
 import pandas as pd
-import numpy as np
-import torch
 from django.conf import settings
 
 from GiftHubApp.database.sql_executor import *
@@ -25,7 +22,7 @@ def predict_lgbm(product_id: str):
         "product_id":product_id
     }
     api.set_data(params)
-    api.set_url("http://175.45.193.211:8011/naver/model/lgbm")
+    api.set_url(settings.MODEL_SERVING_URL + settings.LGBM_SLASH)
     predictions = api.post()
     predictions = pd.DataFrame(predictions["rows"], columns=predictions["columns"])
     
@@ -38,7 +35,7 @@ def predict_bert4rec(list_product_id: list):
         "matrix":list_product_id
     }
     api.set_data(params)
-    api.set_url("http://175.45.193.211:8011/amazon/model/bert4rec")
+    api.set_url(settings.MODEL_SERVING_URL + settings.BERT4REC_SLASH)
     predictions = api.post()
     predictions = predictions["list"]
     
@@ -53,7 +50,7 @@ def predict_ease(df_user_interaction: pd.DataFrame):
         "rows":data
     }
     api.set_data(params)
-    api.set_url("http://175.45.193.211:8011/amazon/model/ease")
+    api.set_url(settings.MODEL_SERVING_URL + settings.EASE_SLASH)
     predictions = api.post()
     predictions = predictions["list"]
     
@@ -65,7 +62,7 @@ def predict_lightgcn(list_product_id: list):
         "matrix":list_product_id
     }
     api.set_data(params)
-    api.set_url("http://175.45.193.211:8011/amazon/model/lightgcn")
+    api.set_url(settings.MODEL_SERVING_URL + settings.LGCN_SLASH)
     predictions = api.post()
     predictions = predictions["list"]
     

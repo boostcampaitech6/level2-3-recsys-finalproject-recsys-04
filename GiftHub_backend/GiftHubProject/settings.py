@@ -9,9 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-import os
-import mlflow
-import torch
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -105,6 +102,11 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GiftHubProject.wsgi.application'
 
+MODEL_SERVING_URL = "http://175.45.193.211:8011"
+LGBM_SLASH = "/naver/model/lgbm"
+BERT4REC_SLASH = "/amazon/model/bert4rec"
+EASE_SLASH = "/amazon/model/ease"
+LGCN_SLASH = "/amazon/model/lightgcn"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases

@@ -4,4 +4,4 @@ VERSION=1.2.0
 docker build --no-cache . --tag django:${VERSION}
 docker stop django
 docker rm django
-docker run --gpus all -dit -p 8000:8000 --name django django:${VERSION}
+docker run -dit -p 8000:8000 --name django django:${VERSION}
