@@ -34,8 +34,8 @@ jobs:
     runs-on: ubuntu-20.04
 
     steps:
-    # NCP 로그인 / docker image pull & run
-    - name: NCP login and docker image pull and run
+    # NCP 로그인 / git pull & Docker run
+    - name: NCP login and git pull and docker run
       uses: appleboy/ssh-action@master
       with:
         host: ${{ secrets.BACKEND_HOST }}
