@@ -27,3 +27,23 @@ jobs:
       run: |
         cd GiftHub_backend
         python manage.py test
+
+  deploy:
+    # needs를 통해 build job이 수행 성공시에 작업되도록 설정
+    needs: build
+    runs-on: ubuntu-20.04
+
+    steps:
+    # NCP 로그인 / docker image pull & run
+    - name: NCP login and docker image pull and run
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.BACKEND_HOST }}
+        username: ${{ secrets.BACKEND_USERNAME }}
+        password: ${{ secrets.BACKEND_PASSWORD }}
+        port: ${{ secrets.BACKEND_PORT }}
+        script: |
+          cd ${{ secrets.BACKEND_DIR_PATH }}
+          git checkout develop_backend
+          git pull
+          bash deploy.sh
