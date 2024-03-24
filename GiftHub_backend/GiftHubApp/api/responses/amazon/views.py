@@ -10,7 +10,7 @@ from GiftHubApp.database.models import *
 from GiftHubApp.database.serializers import *
 from GiftHubApp.open_api_params import *
 from GiftHubApp.database.sql_executor import *
-from GiftHubApp.models.model_serveing import *
+from GiftHubApp.api.requests.model_request import *
 
 class AmazonItemsSelect(APIView):
     @swagger_auto_schema(
@@ -77,7 +77,7 @@ class AmazonPridictionItems_bert4rec(APIView):
             list_product_id.append(dict["product"])
         
         # pridiction items (CF)
-        list_predict = bert4rec_predict(list_product_id)
+        list_predict = predict_bert4rec(list_product_id)
         
         # predict_list select in
         qs = AmazonProduct.objects.filter(product_id__in=list_predict)
@@ -98,7 +98,7 @@ class AmazonPridictionItems_ease(APIView):
         df_user_interaction = pd.DataFrame.from_dict(serializer.data, orient="columns")
         
         # pridiction items (CF)
-        list_predict = ease_predict(df_user_interaction)
+        list_predict = predict_ease(df_user_interaction)
         
         # predict_list select in
         qs = AmazonProduct.objects.filter(product_id__in=list_predict)
@@ -121,7 +121,7 @@ class AmazonPridictionItems_lightgcn(APIView):
             list_product_id.append(dict["product"])
         
         # pridiction items (CF)
-        list_predict = lightgcn_predict(list_product_id)
+        list_predict = predict_lightgcn(list_product_id)
         
         # predict_list select in
         qs = AmazonProduct.objects.filter(product_id__in=list_predict)

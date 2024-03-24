@@ -1,4 +1,0 @@
-mlflow
-scikit-learn==1.4.1.post1
-lightgbm==4.1.0
-cloudpickle==3.0.0

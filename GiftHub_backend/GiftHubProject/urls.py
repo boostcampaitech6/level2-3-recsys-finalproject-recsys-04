@@ -36,5 +36,3 @@ if settings.DEBUG:  # Debug 환경일 때만 동작
         re_path(r'^swagger/$', schema_view.with_ui('swagger', cache_timeout=0), name='schema-swagger-ui'),
         re_path(r'^redoc/$', schema_view.with_ui('redoc', cache_timeout=0), name='schema-redoc'),
     ]
-    
-    urlpatterns += static(settings.IMAGE_URL, document_root=settings.IMAGE_ROOT)

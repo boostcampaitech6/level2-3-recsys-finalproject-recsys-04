@@ -135,38 +135,6 @@ DATABASES = {
     }
 }
 
-# Representative Category Image
-IMAGE_URL = '/image/'
-IMAGE_ROOT = os.path.join(BASE_DIR, 'GiftHubApp/images')
-
-# mlflow connect
-
-if torch.cuda.is_available():
-    DEVICE = "cuda"
-else:
-    DEVICE = "cpu"
-
-MODEL_DOWNLOAD_YN = "N"
-
-MLFLOW_URL = "http://175.45.193.211:8010"
-mlflow.set_tracking_uri(MLFLOW_URL)
-
-## NAVER
-LGBM_PATH = os.path.join(BASE_DIR, 'mlartifacts/category_proba')
-LGBM_VER = "models:/ca_proba/1"
-# LGBM_PROBA = f"{MLFLOW_URL}/invocations"
-
-## AMAZON
-# model BERT4rec
-BERT4REC_PATH = os.path.join(BASE_DIR, 'mlartifacts/BERT4Rec')
-BERT4REC_VER = "models:/bert4rec/3"
-# model EASE
-EASE_PATH = os.path.join(BASE_DIR, 'mlartifacts/EASE')
-EASE_VER = "models:/ease/1"
-# model lightgcn
-LGCN_PATH = os.path.join(BASE_DIR, 'mlartifacts/lightgcn')
-LGCN_VER = "models:/lightgcn/1"
-
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
 

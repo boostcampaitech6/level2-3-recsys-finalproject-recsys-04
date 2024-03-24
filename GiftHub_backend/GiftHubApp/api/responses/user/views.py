@@ -13,7 +13,6 @@ from GiftHubApp.database.sql_executor import *
 from GiftHubApp.utils import *
 from GiftHubApp.open_api_params import *
 from GiftHubApp.api.requests.request import *
-from GiftHubApp.models.model_serveing import *
 
 class CreateUser(APIView):
     @swagger_auto_schema(
@@ -68,7 +67,7 @@ class MatchedItems(APIView):
             return Response(status=status.HTTP_400_BAD_REQUEST)
         
         # lgbm similarlity
-        predictions = lgbm_similarlity(product_id)
+        predictions = predict_lgbm(product_id)
         str_js = predictions.to_json(force_ascii=False, orient="records", indent=4)
         js = json.loads(str_js)
         
