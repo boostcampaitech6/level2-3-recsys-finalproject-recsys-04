@@ -30,7 +30,7 @@ class FilteredRawdataSerializer(serializers.ModelSerializer) :
 class AmazonProductSerializer(serializers.ModelSerializer) :
     class Meta :
         model = AmazonProduct
-        fields = ["product_id", "image_url"]
+        fields = ["product_id", "product_name", "image_url"]
 
 class AmazonUserProductInteractionSerializer(serializers.ModelSerializer) :
     class Meta :
