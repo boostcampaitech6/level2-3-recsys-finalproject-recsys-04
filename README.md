@@ -7,11 +7,6 @@
 - 개인화 맞춤 선물 추천 프로젝트입니다.
 - 선물 받을 사람이 좋아할만한 선물을 추천드립니다!
 
-## 주제 선정 배경
-
-## 타임라인
-![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/bbc95736-5c64-4a6f-b223-88dd04d3b143)
-
 ## 서비스 제공 과정
 ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/cbf2ffab-8206-46d1-9807-d6fba4cf2857)
 1. 선물할 사람의 연령, 성별, 선물 가격대, 개성, 선물하는 상황 등을 고려하여 추천 후보군을 선정합니다.
@@ -20,6 +15,9 @@
 ## S/W 아키텍처
   ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/f8ac4cc9-2671-4256-a635-8b07a5a5b43d)
 - 시스템은 크게 `프론트엔드`, `백엔드`, `데이터베이스`, `모델 관리 및 서빙` **4가지 주요 영역**으로 설계되었습니다.
+
+## 프로젝트 타임라인
+![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/bbc95736-5c64-4a6f-b223-88dd04d3b143)
 
 ## 기술 스택
 | Language | Front-End | Back-End | Modeling & Serving | Database | Common |
