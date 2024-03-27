@@ -23,7 +23,7 @@
 
 ## 데이터베이스 ERD
 ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/1dcef64b-eb18-4d7b-a6e7-3f66d5457d5d)
-- 유저 정보인 user테이블과 상품 정보인 product테이블을 기준으로 유저의 상호작용 데이터를 1:N 정규화를 진행했습니다.
+- 유저 정보인 user테이블과 상품 정보인 product테이블 기준으로 유저 상호작용 데이터를 1:N 정규화를 진행했습니다.
 - user테이블은 user_id를 기준으로 고유값을 가지고, product테이블은 product_id를 기준으로 고유값을 가집니다.
 
 
