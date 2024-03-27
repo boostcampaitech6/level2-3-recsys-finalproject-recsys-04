@@ -15,7 +15,7 @@
 ## 추천 모델 아키텍처
 ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/88ed5236-eea4-4de6-8881-a3fcced9eb16)
 - `Stage 1` : 유저 정보를 고려한 아이템에 대해 필터링 하여 트리 계열 예측모델로 추천 후보군을 선정했습니다.
-- `Stage 2` : 최종 추천에서 다양한 아이템을 추천하고자 아이템 기반 협업 필터링, 유저기반 협업 필터링 결과를 각각 반환합니다.
+- `Stage 2` : 다양한 아이템을 추천하고자 아이템 기반 협업 필터링, 유저기반 협업 필터링 결과를 반환합니다.
 
 ## S/W 아키텍처
   ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/f8ac4cc9-2671-4256-a635-8b07a5a5b43d)
