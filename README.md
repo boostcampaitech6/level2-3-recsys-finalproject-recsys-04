@@ -32,6 +32,5 @@
 
 ## Laboratory Report
 - [소개 페이지](https://www.notion.so/boostcampait/RecSys-04-GiftHub-73d95879d9d34c7abf897a0afe7c9342?pvs=4)
-- PPT
-- 시연 영상
+- [발표 자료](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/blob/setting/docs/%5B%EC%B5%9C%EC%A2%85%5DRecSys_4%EC%A1%B0_%EA%B0%9C%EC%9D%B8%ED%99%94%20%EB%A7%9E%EC%B6%A4%20%EC%84%A0%EB%AC%BC%20%EC%B6%94%EC%B2%9C.pdf)
 - 랩업 레포트
