@@ -3,7 +3,7 @@
 # 🎁GiftHub
 ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/b681984d-70bf-4587-b49e-067ed7a9b243)
 ## 프로젝트 소개
-![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/6de12d7b-e941-40c6-b8d9-a4628297ac71)
+![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/a7facf5b-bc15-4225-a24d-df775117000d)
 - 개인화 맞춤 선물 추천 프로젝트입니다.
 - 선물 받을 사람이 좋아할만한 선물을 추천드립니다!
 
