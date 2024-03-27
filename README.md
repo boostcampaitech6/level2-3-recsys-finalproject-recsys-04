@@ -9,8 +9,13 @@
 
 ## 서비스 제공 과정
 ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/cbf2ffab-8206-46d1-9807-d6fba4cf2857)
-1. 선물할 사람의 연령, 성별, 선물 가격대, 개성, 선물하는 상황 등을 고려하여 추천 후보군을 선정합니다.
-2. 추천된 후보군에서 대상자가 선호하거나 이미 보유하거나 구매할 가능성이 높은 상품을 선택하면, 이를 바탕으로 최상의 선물 후보 20개를 추천합니다.
+1. 선물할 사람의 연령, 성별, 선물 가격대, 개성, 선물하는 상황 등을 고려하여 선물 후보군을 선정합니다.
+2. 추천된 후보군에서 대상자가 구매할 가능성이 높은 상품을 선택하면, 이를 바탕으로 선물 후보 20개를 추천합니다.
+
+## 추천 모델 아키텍처
+![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/88ed5236-eea4-4de6-8881-a3fcced9eb16)
+- `Stage 1` : 유저 정보를 고려한 아이템에 대해 필터링 하여 트리 계열 예측모델로 추천 후보군을 선정했습니다.
+- `Stage 2` : 최종 추천에서 다양한 아이템을 추천하고자 아이템 기반 협업 필터링, 유저기반 협업 필터링 결과를 각각 반환합니다.
 
 ## S/W 아키텍처
   ![image](https://github.com/boostcampaitech6/level2-3-recsys-finalproject-recsys-04/assets/8871767/f8ac4cc9-2671-4256-a635-8b07a5a5b43d)
