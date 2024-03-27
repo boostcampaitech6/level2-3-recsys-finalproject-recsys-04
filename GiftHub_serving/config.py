@@ -12,7 +12,7 @@ class Settings(BaseSettings):
     EASE_PATH: str = Field(default='models/EASE', env="EASE_PATH")
     LGCN_PATH: str = Field(default="models/lightgcn", env="LGCN_PATH")
     LGBM_VER: str = Field(default="models:/ca_proba/1", env="LGBM_VER")
-    BERT4REC_VER: str = Field(default="models:/bert4rec/3", env="BERT4REC_VER")
+    BERT4REC_VER: str = Field(default="models:/bert4rec/4", env="BERT4REC_VER")
     EASE_VER: str = Field(default="models:/ease/1", env="EASE_VER")
     LGCN_VER: str = Field(default="models:/lightgcn/1", env="LGCN_VER")
     

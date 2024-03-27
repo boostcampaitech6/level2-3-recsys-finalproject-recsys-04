@@ -93,6 +93,8 @@ def predict_bert4rec(list_product_id: list):
     used_items_list = [a - 1 for a in seq]
     if len(seq) < max_len:
         seq = np.pad(seq, (max_len - len(seq), 0), 'constant', constant_values=0)  # 패딩 추가
+    else:
+        seq = used_items_list[len(used_items_list) - max_len:]
     
     list_idx_predict = []
     model.bert4rec.eval()
@@ -130,7 +132,7 @@ def predict_ease(df_user_interaction: pd.DataFrame):
 def predict_lightgcn(list_product_id: list):
     sys.path.append(settings.LGCN_PATH)
     from preprocessing import Preprocess
-    from recommend import encode_session_items,infer_embeddings,recommend_item
+    from recommend import encode_session_items, infer_embeddings, recommend_users, random_item
     
     device = settings.DEVICE
     config = {
@@ -140,7 +142,19 @@ def predict_lightgcn(list_product_id: list):
     preprocess = Preprocess(os.path.join(settings.LGCN_PATH, "filtered_data.csv"), config)
     top_k = 10
     encoded_session_items = encode_session_items(preprocess, list_product_id)
-    session_user_embedding, item_embeddings = infer_embeddings(model.lightgcn, encoded_session_items, preprocess.num_users, preprocess.num_items, device)
-    recommended_user_indices = recommend_item(session_user_embedding, item_embeddings, top_k)
-    recommended_items = [preprocess.item_decoder[idx] for idx in recommended_user_indices if idx in preprocess.item_decoder]
-    return recommended_items
+    session_user_embedding, item_embeddings, user_embeddings = infer_embeddings(model.lightgcn, encoded_session_items, preprocess.num_users, preprocess.num_items, device)
+
+    data = pd.read_csv(os.path.join(settings.LGCN_PATH, "filtered_data.csv"))
+    unique_user_ids = data['user_id'].unique()
+    id2idx = {user_id: idx for idx, user_id in enumerate(unique_user_ids)}
+    idx2id = {idx: user_id for user_id, idx in id2idx.items()}    
+    # 유사한 유저의 아이템 추천이면 여기
+    top_k_users = 10  # 행동 패턴이 유사한 상위 K명의 사용자
+    # id2idx가 반환됨
+    recommended_user_indices = recommend_users(session_user_embedding, user_embeddings, top_k_users)
+    # idx2id
+    recommended_user_ids = [idx2id[idx] for idx in recommended_user_indices]
+
+    predictions = random_item(recommended_user_ids,data,top_k_users)
+    
+    return predictions

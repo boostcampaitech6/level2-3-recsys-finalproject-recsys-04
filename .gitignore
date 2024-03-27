@@ -4,6 +4,6 @@
 *.pt
 *.pkl
 __pycache__
-GiftHub_mlflow
-GiftHub_backend/GiftHubApp/migrations
-GiftHub_backend/GiftHubApp/images
+GiftHub_mlflow/mlruns
+GiftHub_mlflow/mlflow_pyfunc_custom
+GiftHub_mlflow/mlartifacts
