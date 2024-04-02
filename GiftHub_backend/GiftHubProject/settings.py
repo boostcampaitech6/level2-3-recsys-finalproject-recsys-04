@@ -9,7 +9,6 @@ https://docs.djangoproject.com/en/4.1/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/4.1/ref/settings/
 """
-
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
@@ -25,7 +24,7 @@ SECRET_KEY = 'django-insecure-57i2bu1u3-rf*3#q4^x#4q4=#$m-_-dbj674(egsahl7pgso6(
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['175.45.193.211', '127.0.0.1', '0.0.0.0', 'localhost']
 
 
 # Application definition
@@ -37,7 +36,41 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'drf_yasg',
+    'GiftHubApp',
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_RENDERER_CLASSES': [  # API 리턴에 사용되는 기본 렌더 클래스 지정
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    
+    # 'DEFAULT_PERMISSION_CLASSES': [
+    #     'rest_framework.permissions.IsAuthenticated',  # 인증된 사용자만 API 액세스
+    # ],
+    # 'DEFAULT_AUTHENTICATION_CLASSES': [
+    #     'rest_framework.authentication.SessionAuthentication',  # Session 인증 클래스
+    #     'rest_framework.authentication.TokenAuthentication',  # Token 인증 클래스
+    # ],
+    # 'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',  # API 결과가 페이지로 나뉘어 표시되는 방식 제어
+    # 'PAGE_SIZE': 10  # 페이지 크기
+    
+    # 'DEFAULT_FILTER_BACKENDS': [  # API 클라이언트가 사용할 수 있는 필터링 옵션을 정의
+    #     'rest_framework.filters.SearchFilter',
+    #     'rest_framework.filters.OrderingFilter',
+    # ],
+    
+    # 'DEFAULT_THROTTLE_CLASSES': [  # 클라이언트가 API에 요청을 할 수 있는 속도를 제한
+    #     'rest_framework.throttling.AnonRateThrottle',
+    #     'rest_framework.throttling.UserRateThrottle',
+    # ],
+    # 'DEFAULT_THROTTLE_RATES': {
+    #     'anon': '100/day',
+    #     'user': '1000/day',
+    # }
+}
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -69,17 +102,40 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'GiftHubProject.wsgi.application'
 
+MODEL_SERVING_URL = "http://175.45.193.211:8011"
+LGBM_SLASH = "/naver/model/lgbm"
+BERT4REC_SLASH = "/amazon/model/bert4rec"
+EASE_SLASH = "/amazon/model/ease"
+LGCN_SLASH = "/amazon/model/lightgcn"
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+## Router
+DATABASE_ROUTERS = [
+    'GiftHubApp.routers.AuthRouter',
+    'GiftHubApp.routers.GiftHubRouter',
+]
+
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+    'default': {  # Django 관리 DB
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'django',
+    'USER': 'recsys4',
+    'PASSWORD': 'recsys1234',
+    'HOST': '223.130.160.153',
+    'PORT': '2306'
+    },
+    
+    'gifthub': {  # gift DB
+    'ENGINE': 'django.db.backends.mysql',
+    'NAME': 'gifthub_test',
+    'USER': 'recsys4',
+    'PASSWORD': 'recsys1234',
+    'HOST': '223.130.160.153',
+    'PORT': '2306'
     }
 }
-
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -103,9 +159,9 @@ AUTH_PASSWORD_VALIDATORS = [
 # Internationalization
 # https://docs.djangoproject.com/en/4.1/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ko'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Seoul'
 
 USE_I18N = True
 
@@ -121,3 +177,11 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SWAGGER_SETTINGS = {
+    'SECURITY_DEFINITIONS': {
+        'basic': {
+            'type': 'basic'
+        }
+    },
+}

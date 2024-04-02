@@ -1,0 +1,7 @@
+django==4.1
+django-filter==23.5
+drf-yasg==1.21.7
+mysqlclient==2.0.3
+pandas==2.2.1
+numpy==1.26.4
+requests==2.31.0
