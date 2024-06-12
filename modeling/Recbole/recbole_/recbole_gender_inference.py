@@ -1,0 +1,1 @@
+# saved된 모델을 받아서 성별에 대한 inference 진행 -> recbole_id_inference로 이동

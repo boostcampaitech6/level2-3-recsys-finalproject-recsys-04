@@ -1,0 +1,49 @@
+name: backend
+
+on:
+  push:
+    branches: [ "develop_backend" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.9"]
+
+    steps:
+    - uses: actions/checkout@v3
+    - name: Set up Python ${{ matrix.python-version }}
+      uses: actions/setup-python@v3
+      with:
+        python-version: ${{ matrix.python-version }}
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        cd GiftHub_backend
+        pip install -r requirements.txt
+    - name: Test Backend Django Excecution
+      run: |
+        cd GiftHub_backend
+        python manage.py test
+
+  deploy:
+    # needs를 통해 build job이 수행 성공시에 작업되도록 설정
+    needs: build
+    runs-on: ubuntu-20.04
+
+    steps:
+    # NCP 로그인 / git pull & Docker run
+    - name: NCP login and git pull and docker run
+      uses: appleboy/ssh-action@master
+      with:
+        host: ${{ secrets.BACKEND_HOST }}
+        username: ${{ secrets.BACKEND_USERNAME }}
+        password: ${{ secrets.BACKEND_PASSWORD }}
+        port: ${{ secrets.BACKEND_PORT }}
+        script: |
+          cd ${{ secrets.BACKEND_DIR_PATH }}
+          git checkout develop_backend
+          git pull
+          bash deploy.sh

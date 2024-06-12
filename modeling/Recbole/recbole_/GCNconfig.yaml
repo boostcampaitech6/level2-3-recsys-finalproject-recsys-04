@@ -1,0 +1,8 @@
+model: LightGCN
+learner: sparse_adam
+learning_rate: 0.001
+epochs: 500
+batch_size: 2048
+embedding_size: 64
+n_layers: 3
+reg_weight: 0.001
